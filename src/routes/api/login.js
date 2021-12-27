@@ -13,6 +13,7 @@ export const post = async (request) => {
 		}
 	});
 
+	console.log('RRRRRRR', result.data);
 	return {
 		body: result,
 		headers: {

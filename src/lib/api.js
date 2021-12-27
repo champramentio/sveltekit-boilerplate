@@ -7,56 +7,6 @@ const axiosAPI = axios.create({
 	timeout: config.requestTimeout
 });
 
-// axiosAPI.interceptors.request.use(
-// 	async (config) => {
-// 		// 		console.log('CCC', config);
-// 		// 		// const state = getting(userState);
-
-// 		// 		// const expires = state && state.expires_at;
-// 		// 		// let accessToken = state && state.access_token;
-// 		// 		// const refreshToken = state && state.refresh_token;
-
-// 		// 		// if (accessToken) {
-// 		// 		// 	//check expired token
-// 		// 		// 	if (expires - Date.now() / 1000 < 60) {
-// 		// 		// 		try {
-// 		// 		// 			const result = await axios({
-// 		// 		// 				url: `${variables.basePath}/refresh_token`,
-// 		// 		// 				method: 'POST',
-// 		// 		// 				data: {
-// 		// 		// 					refresh_token: refreshToken
-// 		// 		// 				}
-// 		// 		// 			})
-// 		// 		// 				.then((res) => {
-// 		// 		// 					return Promise.resolve(res.data);
-// 		// 		// 				})
-// 		// 		// 				.catch((err) => {
-// 		// 		// 					return Promise.reject(err);
-// 		// 		// 				});
-
-// 		// 		// 			if (result.data.error) window.location('/login');
-
-// 		// 		// 			//set new data to the store
-// 		// 		// 			userState.set({ ...result.data, athelete: state.athlete });
-
-// 		// 		// 			//overwrite new access token
-// 		// 		// 			accessToken = result.data.access_token;
-// 		// 		// 		} catch (_error) {
-// 		// 		// 			return Promise.reject(_error);
-// 		// 		// 		}
-// 		// 		// 	}
-// 		// 		// }
-
-// 		// 		// //return config;
-// 		// 		// config.headers['authorization'] = `Bearer ${accessToken}`;
-
-// 		return config;
-// 	},
-// 	(error) => {
-// 		return Promise.reject(error);
-// 	}
-// );
-
 //implement a method to execute all the request from here.
 const apiRequest = ({ method, url, payload, token }) => {
 	return axiosAPI({
