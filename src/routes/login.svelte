@@ -1,8 +1,10 @@
 <script>
-	import { goto } from '$app/navigation';
 	import { toast, modal } from '$lib/modal';
+	import Button from '$lib/components/Button.svelte';
 
-	let loading = false;
+	// button states
+	let isLoading = false;
+
 	let server_captcha = '';
 
 	let row = {
@@ -12,6 +14,8 @@
 	};
 
 	async function handleLogin() {
+		isLoading = true;
+
 		const result = await fetch('/api/login', {
 			method: 'POST',
 			body: JSON.stringify(row)
@@ -20,15 +24,14 @@
 		const { success, error, data } = await result.json();
 
 		if (error) {
+			isLoading = false;
 			modal('error', 'error', error);
 			if (data?.captcha) server_captcha = data.captcha;
 		}
 		if (success) {
-			// toast('success', success);
-			goto('/member/dashboard');
-			location.reload();
+			window.location = '/member/dashboard';
+			toast('success', success);
 		}
-		loading = true;
 	}
 </script>
 
@@ -37,7 +40,7 @@
 		<div class="container">
 			<div class="columns is-centered">
 				<div class="column is-4-desktop">
-					<form on:submit|preventDefault={handleLogin} class="box" method="post">
+					<form class="box" method="post">
 						<h1 class="title has-text-centered">Login</h1>
 						<div class="field">
 							<label class="label">Email</label>
@@ -63,7 +66,11 @@
 						{/if}
 
 						<div class="field mt-5">
-							<button class="button is-success is-fullwidth">Login</button>
+							<Button on:click={handleLogin} defaultClass="button is-primary is-fullwidth" loading={isLoading}>
+								{isLoading ? 'Authenticating...' : 'Login'}
+							</Button>
+
+							<!-- <button class="button is-success is-fullwidth">Login</button> -->
 						</div>
 					</form>
 				</div>

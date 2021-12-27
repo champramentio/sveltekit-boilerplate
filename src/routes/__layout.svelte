@@ -17,7 +17,6 @@
 </script>
 
 <script>
-	import { goto } from '$app/navigation';
 	import '../../node_modules/sweetalert2/dist/sweetalert2.min.css';
 	import { toast, modal } from '$lib/modal';
 
@@ -29,13 +28,11 @@
 
 		const { success, error } = await result.json();
 
-		if (error) {
-			modal('error', 'error', error);
-		}
+		if (error) modal('error', 'error', error);
+
 		if (success) {
-			// toast('success', success);
-			goto('/login');
-			location.reload();
+			window.location = '/login';
+			toast('success', success);
 		}
 	};
 </script>
