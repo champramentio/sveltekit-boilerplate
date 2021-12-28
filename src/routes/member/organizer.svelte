@@ -2,8 +2,7 @@
 	import { onMount } from 'svelte';
 	import { displayStatus, tableNumbering } from '$lib/utils';
 	import Pagination from '$lib/components/Pagination.svelte';
-
-	export let session;
+	import Spinner from '$lib/components/Spinner.svelte';
 
 	let list = [];
 	let current_page = 1;
@@ -34,13 +33,18 @@
 <div class="container">
 	<div class="column"><h1>{title}</h1></div>
 	<div class="column">
+		<div>
+			<a href="/member/organizer/add" class="button is-primary">Add New</a>
+		</div>
+		<br />
 		<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
 			<tr>
 				<th>#</th>
 				<th>Organizer Name</th>
 				<th>Status</th>
 			</tr>
-			{#if list?.data}
+
+			{#if list?.total > 0}
 				{#each list.data as r, index}
 					<tr>
 						<td>{tableNumbering(index, current_page)}</td>
@@ -48,6 +52,16 @@
 						<td>{@html displayStatus(r.organizer_verified_status_name)}</td>
 					</tr>
 				{/each}
+			{:else if list?.total === 0}
+				<tr>
+					<td colspan="7" align="center">Data tidak ditemukan.</td>
+				</tr>
+			{:else}
+				<tr>
+					<td colspan="7" class="has-text-centered">
+						<Spinner />
+					</td>
+				</tr>
 			{/if}
 		</table>
 
