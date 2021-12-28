@@ -13,17 +13,13 @@ const apiRequest = ({ method, url, payload, token }) => {
 		method,
 		url,
 		data: payload,
-		headers: token
-			? {
-					Authorization: `Bearer ${token}`
-			  }
-			: ''
+		headers: token ? { Authorization: `Bearer ${token}` } : ''
 	})
 		.then((res) => {
 			return Promise.resolve(res.data);
 		})
 		.catch((err) => {
-			return Promise.reject(err);
+			return Promise.reject(err.message);
 		});
 };
 

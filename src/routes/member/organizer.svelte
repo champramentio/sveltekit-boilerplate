@@ -3,6 +3,7 @@
 	import { displayStatus, tableNumbering } from '$lib/utils';
 	import Pagination from '$lib/components/Pagination.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
+	import { toast } from '$lib/modal';
 
 	let list = [];
 	let current_page = 1;
@@ -15,6 +16,7 @@
 	async function getList(page = current_page) {
 		const result = await fetch(`/api/organizer?page=${page}`);
 		list = await result.json();
+		if (list.error) toast('error', list.error);
 	}
 
 	async function paging(passing) {
@@ -59,7 +61,11 @@
 			{:else}
 				<tr>
 					<td colspan="7" class="has-text-centered">
-						<Spinner />
+						{#if list.error}
+							{list.error}
+						{:else}
+							<Spinner />
+						{/if}
 					</td>
 				</tr>
 			{/if}

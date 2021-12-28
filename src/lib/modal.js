@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import { titleCase } from './utils';
+import { titleCase } from '$lib/utils';
 
 export function toast(type, title) {
 	const Toast = Swal.mixin({
