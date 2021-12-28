@@ -19,10 +19,11 @@
 <script>
 	import '../../node_modules/sweetalert2/dist/sweetalert2.min.css';
 	import { toast, modal } from '$lib/modal';
+	import Footer from '$lib/components/Footer.svelte';
 
 	export let path, session;
 
-	console.log('session', path, session);
+	// console.log('session', path, session);
 	const handleLogout = async () => {
 		const result = await fetch('/api/logout', { method: 'POST' });
 
@@ -54,10 +55,11 @@
 		<div id="navbarBasicExample" class="navbar-menu">
 			{#if session.name}
 				<div class="navbar-start">
-					<a href="/member/dashboard" class="navbar-item"> Dashboard </a>
-					<a href="/member/sender" class="navbar-item"> Sender </a>
-					<a href="/member/user" class="navbar-item"> User </a>
-					<a href="/member/event" class="navbar-item"> Event </a>
+					<a href="/member/dashboard" class="navbar-item">Dashboard</a>
+					<a href="/member/sender" class="navbar-item">Sender</a>
+					<a href="/member/organizer" class="navbar-item">Organizer</a>
+					<a href="/member/user" class="navbar-item">User</a>
+					<a href="/member/event" class="navbar-item">Event</a>
 				</div>
 
 				<div class="navbar-end">
@@ -82,4 +84,8 @@
 
 <div class="container">
 	<slot />
+
+	<footer>
+		<Footer />
+	</footer>
 </div>

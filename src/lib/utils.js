@@ -90,3 +90,14 @@ export function addAndFormatDate(arg1, arg2) {
 export function addAndFormatDatetime(arg1, arg2) {
 	return dayjs().add(arg1, arg2).format('YYYY-MM-DD HH:mm:ss');
 }
+
+export function displayStatus(status_name) {
+	if (['rejected', 'canceled', 'void', 'unverified', 'inactive', 'expired', 'failed'].includes(status_name)) return `<span class="tag is-danger">${status_name}</span>`;
+	else if (['approved', 'completed', 'active', 'verified', 'valid', 'issued'].includes(status_name)) return `<span class="tag is-success">${status_name}</span>`;
+	else if (['needaction'].includes(status_name)) return `<span class="tag" style="color:white;background-color:orange;padding:6px">${status_name}</span>`;
+	else return `<span class="tag">${status_name}</span>`;
+}
+
+export function tableNumbering(index, current_page) {
+	return (current_page - 1) * 15 + parseInt(index) + 1;
+}

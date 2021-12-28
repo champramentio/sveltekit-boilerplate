@@ -35,7 +35,7 @@ export async function handle({ request, resolve }) {
 		}
 	}
 
-	console.log('dari handle:', request.locals);
+	// console.log('dari handle:', request.locals);
 
 	return response;
 }
