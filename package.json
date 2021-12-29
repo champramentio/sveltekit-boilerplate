@@ -1,5 +1,5 @@
 {
-  "name": "sveltekit-pokemon",
+  "name": "sveltekit-boilerplate",
   "version": "0.0.8",
   "scripts": {
     "dev": "svelte-kit dev",

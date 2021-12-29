@@ -63,7 +63,7 @@ export async function dialogueCloseOnly(type, title, message) {
 	});
 }
 
-export async function swalInput(type, title, input) {
+export async function swalInput(type, title) {
 	return await Swal.fire({
 		title: title,
 		input: 'textarea',
