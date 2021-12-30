@@ -28,6 +28,7 @@
     "secure-ls": "^1.2.6",
     "svelte-loading-spinners": "^0.1.7",
     "svelte-local-storage-store": "^0.2.6",
+    "svelte-select": "^4.4.7",
     "sweetalert2": "^11.3.0"
   }
 }

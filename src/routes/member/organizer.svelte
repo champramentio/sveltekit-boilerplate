@@ -4,10 +4,14 @@
 	import Pagination from '$lib/components/Pagination.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { toast } from '$lib/modal';
+	import OrganizerForm from '$lib/components/OrganizerForm.svelte';
+	import OrganizerDetail from '$lib/components/OrganizerDetail.svelte';
 
+	const title = 'Organizer';
 	let list = [];
 	let current_page = 1;
-	const title = 'Organizer';
+	let modalForm;
+	let modalDetail;
 
 	onMount(async () => {
 		await getList();
@@ -36,7 +40,7 @@
 	<div class="column"><h1>{title}</h1></div>
 	<div class="column">
 		<div>
-			<a href="/member/organizer/add" class="button is-primary">Add New</a>
+			<a href={null} on:click={() => modalForm.showModal()} class="button is-primary">Add New</a>
 		</div>
 		<br />
 		<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
@@ -44,6 +48,7 @@
 				<th>#</th>
 				<th>Organizer Name</th>
 				<th>Status</th>
+				<th>Action</th>
 			</tr>
 
 			{#if list?.total > 0}
@@ -52,11 +57,27 @@
 						<td>{tableNumbering(index, current_page)}</td>
 						<td>{r.organizer_name}</td>
 						<td>{@html displayStatus(r.organizer_verified_status_name)}</td>
+						<td class="has-text-centered" data-label="Action">
+							<div class="dropdown is-right is-hoverable">
+								<div class="dropdown-trigger">
+									<button class="button is-primary is-small" aria-haspopup="true" aria-controls="dropdown-menu"><span class="icon is-small">•••</span></button>
+								</div>
+								<div class="dropdown-menu" id="dropdown-menu" role="menu">
+									<div class="dropdown-content">
+										<a href={null} class="dropdown-item" on:click={() => modalDetail.showModal(r.organizer_id)}>View Detail</a>
+										<hr class="dropdown-divider" />
+										<!-- <a href={null} class="dropdown-item" on:click={() => onItemClick(item)}>Edit</a> -->
+										<!-- <hr class="dropdown-divider" />
+														<a href={null} class="dropdown-item" on:click={() => displayUploadDocument(item)}>Upload Dokumen</a> -->
+									</div>
+								</div>
+							</div>
+						</td>
 					</tr>
 				{/each}
 			{:else if list?.total === 0}
 				<tr>
-					<td colspan="7" align="center">Data tidak ditemukan.</td>
+					<td colspan="7" align="center">No data found</td>
 				</tr>
 			{:else}
 				<tr>
@@ -76,3 +97,6 @@
 		{/if}
 	</div>
 </div>
+
+<OrganizerForm bind:this={modalForm} on:getList={getList} />
+<OrganizerDetail bind:this={modalDetail} />

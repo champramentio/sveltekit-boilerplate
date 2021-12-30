@@ -3,11 +3,12 @@ import jwt_decode from 'jwt-decode';
 import api from '$lib/api';
 
 export async function handle({ request, resolve }) {
-	const { accessToken, refreshToken, name } = decodeCookie(request.headers.cookie || '');
+	const { accessToken, refreshToken, name, id } = decodeCookie(request.headers.cookie || '');
 
 	request.locals.accessToken = accessToken;
 	request.locals.refreshToken = refreshToken;
 	request.locals.name = name;
+	request.locals.id = id;
 
 	const response = await resolve(request);
 
@@ -29,7 +30,7 @@ export async function handle({ request, resolve }) {
 			return {
 				...response,
 				headers: {
-					'set-cookie': result?.data ? encodeCookie(result.data.token, result.data.refreshToken, request.locals.name) : ''
+					'set-cookie': result?.data ? encodeCookie(result.data.token, result.data.refreshToken, request.locals.name, request.locals.id) : ''
 				}
 			};
 		}
@@ -41,8 +42,8 @@ export async function handle({ request, resolve }) {
 }
 
 export function getSession(request) {
-	const { name } = decodeCookie(request.headers.cookie || '');
+	const { id, name } = decodeCookie(request.headers.cookie || '');
 
 	// console.log('dari getsession:', name);
-	return { name };
+	return { id, name };
 }

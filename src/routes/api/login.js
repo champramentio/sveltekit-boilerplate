@@ -13,11 +13,10 @@ export const post = async (request) => {
 		}
 	});
 
-	console.log('RRRRRRR', result.data);
 	return {
 		body: result,
 		headers: {
-			'set-cookie': result?.data?.auth ? encodeCookie(result.data.auth.token, result.data.auth.refreshToken, result.data.name) : ''
+			'set-cookie': result?.data?.auth ? encodeCookie(result.data.auth.token, result.data.auth.refreshToken, result.data.name, result.data.id) : ''
 		}
 	};
 };

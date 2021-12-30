@@ -6,12 +6,12 @@ dayjs().format();
 
 const AUTH_COOKIE_NAME = 'artkie';
 
-export function encodeCookie(token, refreshToken, name) {
+export function encodeCookie(token, refreshToken, name, id) {
 	//get access token expired timestamp
 	const { exp: expiredTimestamp } = jwt_decode(token);
 
 	//format cookie
-	const formatted = `${token}|${refreshToken}|${name}`;
+	const formatted = `${token}|${refreshToken}|${name}|${id}`;
 
 	//setup cookie options
 	return cookie.serialize(AUTH_COOKIE_NAME, formatted, {
@@ -36,9 +36,9 @@ export function removeCookie() {
 
 export function decodeCookie(allCookies) {
 	const parsed = cookie.parse(allCookies);
-	const [accessToken, refreshToken, name] = parsed[AUTH_COOKIE_NAME] ? parsed[AUTH_COOKIE_NAME].split('|') : [];
+	const [accessToken, refreshToken, name, id] = parsed[AUTH_COOKIE_NAME] ? parsed[AUTH_COOKIE_NAME].split('|') : [];
 
-	return { accessToken, refreshToken, name };
+	return { accessToken, refreshToken, name, id };
 }
 
 export function titleCase(str) {
