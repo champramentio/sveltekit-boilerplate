@@ -6,7 +6,9 @@
 	let isOpen = false;
 	$: if (isOpen) {
 		fetching();
+		fetchingLogo();
 	}
+	let logoBlob;
 
 	export function showModal(id) {
 		company_id = id;
@@ -18,11 +20,17 @@
 	}
 
 	async function fetching() {
-		let result = await fetch(`/api/organizer/${company_id}`);
+		const result = await fetch(`/api/organizer/${company_id}`);
 		const { success, error, data } = await result.json();
 
 		if (error) modal('error', 'error', error);
 		if (success) row = data;
+	}
+
+	async function fetchingLogo() {
+		const result = await fetch(`/api/organizer/${company_id}/logo`);
+
+		logoBlob = URL.createObjectURL(await result.blob());
 	}
 </script>
 
@@ -36,6 +44,14 @@
 		<section class="modal-card-body">
 			<div class="columns is-desktop">
 				<table class="table is-narrow is-hoverable is-fullwidth">
+					<tr>
+						<td>Logo</td>
+						<td>
+							{#if logoBlob}
+								<img src={logoBlob} alt="" width="100%" data-action="zoom" />
+							{/if}
+						</td>
+					</tr>
 					<tr>
 						<td>Name</td>
 						<td>{row.organizer_name}</td>

@@ -6,9 +6,7 @@ export const get = async (request) => {
 			url: `/organizer?${request.query.toString()}`,
 			token: request.locals.accessToken
 		})
-		.catch((err) => {
-			return { error: err };
-		});
+		.catch((error) => error);
 
 	return {
 		body: result
@@ -34,9 +32,7 @@ export const post = async (request) => {
 				organizer_logo
 			}
 		})
-		.catch((err) => {
-			return { error: err };
-		});
+		.catch((error) => error);
 
 	return {
 		body: result

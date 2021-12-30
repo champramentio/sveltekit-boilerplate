@@ -8,35 +8,32 @@ const axiosAPI = axios.create({
 });
 
 //implement a method to execute all the request from here.
-const apiRequest = ({ method, url, payload, token }) => {
+const apiRequest = ({ method, url, payload, token, type = 'json' }) => {
 	return axiosAPI({
 		method,
 		url,
 		data: payload,
-		headers: token ? { Authorization: `Bearer ${token}` } : ''
+		headers: token ? { Authorization: `Bearer ${token}` } : '',
+		responseType: type
 	})
-		.then((res) => {
-			return Promise.resolve(res.data);
-		})
-		.catch((err) => {
-			return Promise.reject(err.message);
-		});
+		.then((res) => res.data)
+		.catch((err) => err.message);
 };
 
 //function to execute the http get request
-const get = ({ url, token }) => apiRequest({ method: 'get', url, token });
+const get = ({ url, token, type }) => apiRequest({ method: 'get', url, token, type });
 
 //function to execute the http delete request
-const del = ({ url, payload, token }) => apiRequest({ method: 'delete', url, payload, token });
+const del = ({ url, payload, token, type }) => apiRequest({ method: 'delete', url, payload, token, type });
 
 //function to execute the http post request
-const post = ({ url, payload, token }) => apiRequest({ method: 'post', url, payload, token });
+const post = ({ url, payload, token, type }) => apiRequest({ method: 'post', url, payload, token, type });
 
 //function to execute the http put request
-const put = ({ url, payload, token }) => apiRequest({ method: 'put', url, payload, token });
+const put = ({ url, payload, token, type }) => apiRequest({ method: 'put', url, payload, token, type });
 
 //function to execute the http path request
-const patch = ({ url, payload, token }) => apiRequest({ method: 'patch', url, payload, token });
+const patch = ({ url, payload, token, type }) => apiRequest({ method: 'patch', url, payload, token, type });
 
 //expose your method to other services or actions
 const api = {

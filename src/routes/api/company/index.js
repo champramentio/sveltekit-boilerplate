@@ -6,9 +6,7 @@ export const get = async (request) => {
 			url: `/company?${request.query.toString()}`,
 			token: request.locals.accessToken
 		})
-		.catch((err) => {
-			return { error: err };
-		});
+		.catch((error) => error);
 
 	return {
 		body: result

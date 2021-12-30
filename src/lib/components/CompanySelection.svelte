@@ -6,42 +6,41 @@
 	export let selected;
 	export let selectedValue; //sebagai id untuk diattach lgsg (ketika edit)
 	const optionIdentifier = 'company_id';
-	const getSelectionLabel = (row) => row.company_name;
 	let list = [];
 
 	onMount(async () => {
-		await fetching();
+		await getList();
 	});
 
-	async function fetching(search) {
-		list = await getList(search);
-		return list; //return untuk mengupdate list
-	}
+	const getSelectionLabel = (option) => option?.company_name;
 
 	async function getList(search = null) {
-		//query parameter
-		let query = [];
-		let result;
-
-		//query
+		//parameter
+		let query = ['company_active_status=1', 'company_verified_status_name=verified'];
 		if (search) query.push(`company_name=${search}`);
 
-		//jika ada query parameter
-		if (query.length > 0) result = await fetch(`/api/company?company_active_status=1&company_verified_status_name=verified&${query.join('&')}`);
-		else result = await fetch('/api/company?company_active_status=1&company_verified_status_name=verified');
-
-		const { success, error, data } = await result.json();
-
-		//return
-		if (success) return data;
+		//query
+		let result = await fetch(`/api/company?${query.join('&')}`);
+		const { data } = await result.json();
+		if (data) list = data;
+		return list;
 	}
 
 	//balikin id
-	function handleSelect(params) {
-		selected = params.detail.company_id; //default balikin id
-		// $current_company = params.detail;
-		// $current_company_id = params.detail.company_id;
+	function handleSelect(event) {
+		selected = event.detail.company_id; //default balikin id
 	}
 </script>
 
-<Select loadOptions={fetching} isMulti={false} {getSelectionLabel} on:select={handleSelect} {Item} items={list} {optionIdentifier} bind:selectedValue placeholder="- Choose -" />
+<Select
+	loadOptions={getList}
+	isClearable={true}
+	isMulti={false}
+	{getSelectionLabel}
+	on:select={handleSelect}
+	{Item}
+	items={list}
+	{optionIdentifier}
+	bind:selectedValue
+	placeholder="- Choose -"
+/>

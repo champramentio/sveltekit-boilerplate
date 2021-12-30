@@ -101,7 +101,6 @@
 				<div class="column field">
 					<label class="label">Company</label>
 					<div class="control">
-						<!-- <input class="input" type="text" bind:value={row.company_id} /> -->
 						<CompanySelection bind:selected={row.company_id} bind:selectedValue={row.company} />
 					</div>
 				</div>
@@ -115,6 +114,7 @@
 		</section>
 		<footer class="modal-card-foot">
 			<button class="button is-primary" on:click={() => submitting()}>Save</button>
+			<button class="button" on:click={() => closeModal()}>Close</button>
 		</footer>
 	</div>
 </div>

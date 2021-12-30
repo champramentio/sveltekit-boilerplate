@@ -4,14 +4,16 @@ import { encodeCookie } from '$lib/utils';
 export const post = async (request) => {
 	const { email, password, captcha } = JSON.parse(request.body);
 
-	const result = await api.post({
-		url: '/login',
-		payload: {
-			email,
-			password,
-			captcha
-		}
-	});
+	const result = await api
+		.post({
+			url: '/login',
+			payload: {
+				email,
+				password,
+				captcha
+			}
+		})
+		.catch((error) => error);
 
 	return {
 		body: result,
