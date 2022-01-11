@@ -73,8 +73,8 @@
 			{:else}
 				<div class="navbar-end">
 					<div class="navbar-item">
-						<a href="/login" class="navbar-item"> Login </a>
-						<a href="/register" class="navbar-item"> Register </a>
+						<a href="/login" class="navbar-item">Login</a>
+						<a href="/register" class="navbar-item">Register</a>
 					</div>
 				</div>
 			{/if}
